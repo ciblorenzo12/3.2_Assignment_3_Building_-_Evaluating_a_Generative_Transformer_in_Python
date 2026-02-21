@@ -1,3 +1,5 @@
+# I used this to keep cache, env, and build files out of the repo.
+# It helps keep commits focused on source code and configs.
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

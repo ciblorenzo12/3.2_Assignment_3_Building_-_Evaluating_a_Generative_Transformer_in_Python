@@ -1,0 +1,26 @@
+# I used this as my baseline experiment setup.
+# It runs few-shot prompting with standard generation settings.
+experimentName: baseFewShot
+modelId: google/gemma-2-2b-it
+task: summarization
+dataset:
+  source: hf
+  name: xsum
+  split: validation
+  limit: 200
+prompt:
+  mode: fewShot
+  numShots: 2
+generation:
+  maxNewTokens: 160
+  doSample: true
+  temperature: 0.7
+  topP: 0.95
+eval:
+  rouge: true
+  bertScore: true
+efficiency:
+  measureLatency: true
+  measureTokensPerSec: true
+seed: 42
+outputDir: results

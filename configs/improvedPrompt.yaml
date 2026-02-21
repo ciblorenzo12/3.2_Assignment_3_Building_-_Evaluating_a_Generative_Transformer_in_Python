@@ -1,0 +1,26 @@
+# I used this setup to test a more structured prompt format.
+# Most settings stay close to baseline so comparison is fair.
+experimentName: improvedPrompt
+modelId: google/gemma-2-2b-it
+task: summarization
+dataset:
+  source: hf
+  name: xsum
+  split: validation
+  limit: 200
+prompt:
+  mode: structuredFewShot
+  numShots: 2
+generation:
+  maxNewTokens: 160
+  doSample: true
+  temperature: 0.5
+  topP: 0.9
+eval:
+  rouge: true
+  bertScore: true
+efficiency:
+  measureLatency: true
+  measureTokensPerSec: true
+seed: 42
+outputDir: results
