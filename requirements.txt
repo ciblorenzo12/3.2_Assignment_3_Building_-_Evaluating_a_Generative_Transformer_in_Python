@@ -1,0 +1,12 @@
+# requirements 
+torch
+transformers
+datasets
+accelerate
+evaluate
+rouge-score
+bert-score
+sacrebleu
+numpy
+pyyaml
+tqdm
