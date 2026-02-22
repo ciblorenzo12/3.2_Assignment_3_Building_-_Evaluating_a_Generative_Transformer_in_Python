@@ -1,0 +1,22 @@
+{
+  "experimentName": "ablationLowTopP",
+  "modelId": "Qwen/Qwen2.5-1.5B-Instruct",
+  "torchCudaAvailable": false,
+  "transformersVersion": "5.2.0",
+  "dataQuality": {
+    "emptyPredictions": 0,
+    "emptyPredictionsPct": 0.0
+  },
+  "qualityMetrics": {
+    "rouge": {
+      "rouge1": 0.19895634207890886,
+      "rouge2": 0.05057878311937371,
+      "rougeL": 0.14079933203953426,
+      "rougeLsum": 0.14158988124066188
+    }
+  },
+  "efficiency": {
+    "latencyAvgSec": 13.241654810500076,
+    "tokensPerSecAvg": 6.446370339415896
+  }
+}

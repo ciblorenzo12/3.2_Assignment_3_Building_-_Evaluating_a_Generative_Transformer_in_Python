@@ -1,0 +1,24 @@
+experimentName: ablationLowTopP
+task: summarization
+modelId: Qwen/Qwen2.5-1.5B-Instruct
+dataset:
+  source: hf
+  name: xsum
+  split: validation
+  limit: 200
+prompt:
+  mode: fewShot
+  numShots: 2
+generation:
+  maxNewTokens: 120
+  doSample: true
+  temperature: 0.5
+  topP: 0.6
+eval:
+  rouge: true
+  bertScore: false
+efficiency:
+  measureLatency: true
+  measureTokensPerSec: true
+seed: 42
+outputDir: results
