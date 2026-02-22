@@ -1,0 +1,49 @@
+I manually inspected generated summaries across baseline, improved prompting, and ablation experiments and identified several recurring failure modes.
+
+Failure Type 1: Hallucinated facts
+Example:
+Reference:
+Former Premier League footballer Sam Sodje has appeared in court alongside three brothers accused of charity fraud.
+Prediction:
+Former Reading defender denies fraudulent trading charges related to Sodje Sports Foundation, which raises funds for Nigerian sports; family members face trial in July.
+Notes:
+The model added additional details and expanded beyond the reference summary. While related to the article, it inserted unsupported information and over-explained the event.
+
+Failure Type 2: Completely incorrect information (severe hallucination)
+Example:
+Reference:
+Two teenagers have been charged in connection with an incident in west Belfast in which a car collided with two police vehicles.
+Prediction:
+Two teenagers have been arrested on suspicion of armed robbery. They face up to seven years in jail if convicted.
+Notes:
+The generated summary describes a completely different crime that does not appear in the article. This is a major hallucination and shows the model sometimes relies on prior knowledge patterns rather than the input text.
+
+Failure Type 3: Entity confusion
+Example:
+Reference:
+Barcelona football club chief Sandro Rosell has resigned following a Spanish court's decision to look into last year's signing of Brazil star Neymar.
+Prediction:
+FC Barcelona President Josep Maria Bartomeu has stepped down amid speculation about the transfer of Lionel Messi to Paris Saint-Germain.
+Notes:
+The model replaced the correct person (Sandro Rosell) with a different person and invented a different football transfer. This shows entity substitution errors common in generative transformers.
+
+Failure Type 4: Missing key information
+Example:
+Reference:
+The Duchess of Cambridge will feature on the cover of British Vogue to mark the magazine's centenary.
+Prediction:
+British royal Kate Middleton has agreed to pose for a photo shoot with British Vogue magazine.
+Notes:
+The summary omits the important reason (centenary celebration) and loses the main point of the article.
+
+Failure Type 5: Numerical or detail corruption
+Example:
+Reference:
+A pedestrian has been struck by a taxi in Dundee after it mounted the pavement.
+Prediction:
+A young man injured by a broken glass window during a university graduation party is being treated at hospital.
+Notes:
+The event type changed entirely. The model altered the cause of injury and location details.
+
+Conclusion:
+The improved structured prompt reduced verbosity and improved readability, but hallucinations and entity confusion still occur. The model is capable of producing fluent summaries but factual reliability is not guaranteed.
