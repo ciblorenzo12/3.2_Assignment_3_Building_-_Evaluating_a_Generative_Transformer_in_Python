@@ -70,6 +70,7 @@ def main(configPath: str) -> None:
         references.append(refSummary)
 
         sampleRows.append({
+            "article": articleText,
             "prediction": genOut["text"],
             "reference": refSummary,
             "isEmptyPrediction": not genOut["text"].strip(),
@@ -105,14 +106,25 @@ def main(configPath: str) -> None:
     ensureDir(os.path.join(outDir, "samples"))
 
     metricsPath = os.path.join(outDir, "metrics", f"{cfg['experimentName']}.json")
-    samplesPath = os.path.join(outDir, "samples", f"{cfg['experimentName']}.jsonl")
+    samplesPath = os.path.join(outDir, "samples", f"{cfg['experimentName']}.txt")
 
     with open(metricsPath, "w", encoding="utf-8") as f:
         json.dump(runInfo, f, indent=2)
 
     with open(samplesPath, "w", encoding="utf-8") as f:
-        for row in sampleRows[:25]:
-            f.write(json.dumps(row) + "\n")
+        for idx, row in enumerate(sampleRows, start=1):
+            f.write(f"=== Sample {idx} ===\n")
+            f.write("ARTICLE:\n")
+            f.write(row["article"].strip() + "\n\n")
+            f.write("REFERENCE SUMMARY:\n")
+            f.write(row["reference"].strip() + "\n\n")
+            f.write("GENERATED SUMMARY:\n")
+            f.write(row["prediction"].strip() + "\n\n")
+            f.write(
+                f"Latency (sec): {row['latencySec']:.4f}\n"
+                f"Tokens/sec: {row['tokensPerSec']:.2f}\n"
+            )
+            f.write("\n")
 
     print(
         f"Empty predictions: {emptyPredictionCount}/{len(predictions)} "

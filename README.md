@@ -80,9 +80,9 @@ results/
     improvedPrompt.json
     ablationHighTemp.json
   samples/
-    baseFewShot.jsonl       # First 25 predictions + references
-    improvedPrompt.jsonl
-    ablationHighTemp.jsonl
+    baseFewShot.txt         # All samples with article + summaries
+    improvedPrompt.txt
+    ablationHighTemp.txt
 
 stdout:
   Empty predictions: 0/200 (0.00%)
@@ -92,7 +92,7 @@ stdout:
 ```json
 {
   "experimentName": "baseFewShot",
-  "modelId": "google/gemma-2-2b-it",
+  "modelId": "Qwen/Qwen2.5-1.5B-Instruct",
   "torchCudaAvailable": false,
   "transformersVersion": "4.x.x",
   "dataQuality": {
@@ -138,7 +138,7 @@ stdout:
 │   └── ablationHighTemp.yaml # Higher temperature ablation
 ├── results/
 │   ├── metrics/              # Experiment outputs (.json)
-│   └── samples/              # Sample predictions (.jsonl)
+│   └── samples/              # Sample generations (.txt)
 ├── run.ps1                   # Windows PowerShell runner
 ├── run.sh                    # Unix/Bash runner
 ├── requirements.txt          # Python dependencies
@@ -157,7 +157,7 @@ Edit `configs/*.yaml` to change:
 Example minimal config for testing:
 ```yaml
 experimentName: quickTest
-modelId: google/gemma-2-2b-it
+modelId: Qwen/Qwen2.5-1.5B-Instruct
 dataset:
   source: hf
   name: xsum
@@ -188,7 +188,7 @@ outputDir: results
 ## Datasets & Attribution
 
 - **XSum:** CNN/DailyMail abstractive summarization (https://github.com/EdinburghNLP/XSum)
-- **Model:** google/gemma-2-2b-it (Apache 2.0 license)
+- **Model:** Qwen/Qwen2.5-1.5B-Instruct (Apache 2.0 license)
 - **Evaluation:** rouge-score, bert-score, Hugging Face evaluate
 
 ## Safety & Risk Analysis

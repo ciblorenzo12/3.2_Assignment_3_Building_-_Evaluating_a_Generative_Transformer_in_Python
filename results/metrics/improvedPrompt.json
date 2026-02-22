@@ -16,7 +16,7 @@
     }
   },
   "efficiency": {
-    "latencyAvgSec": 12.174634069999957,
-    "tokensPerSecAvg": 6.607765102562865
+    "latencyAvgSec": 12.166459350001242,
+    "tokensPerSecAvg": 6.607826240822602
   }
 }
