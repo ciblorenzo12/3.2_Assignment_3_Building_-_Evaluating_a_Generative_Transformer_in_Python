@@ -1,24 +1,24 @@
 # I used this ablation to see how higher temperature changes summary quality.
 # It keeps the same pipeline but samples more aggressively.
 experimentName: ablationHighTemp
-modelId: google/gemma-2-2b-it
+modelId: Qwen/Qwen2.5-1.5B-Instruct
 task: summarization
 dataset:
   source: hf
   name: xsum
   split: validation
-  limit: 200
+  limit: 20
 prompt:
   mode: structuredFewShot
   numShots: 2
 generation:
-  maxNewTokens: 160
+  maxNewTokens: 80
   doSample: true
   temperature: 0.9
   topP: 0.9
 eval:
   rouge: true
-  bertScore: true
+  bertScore: false
 efficiency:
   measureLatency: true
   measureTokensPerSec: true

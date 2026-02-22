@@ -6,13 +6,22 @@ from tqdm import tqdm
 from transformers import __version__ as transformersVersion
 import torch
 
-from configLoader import loadConfig
-from seedUtils import setGlobalSeed
-from dataLoader import loadSummarizationData
-from modelLoader import loadModelAndTokenizer
-from promptBuilder import buildFewShotPrompt, buildStructuredFewShotPrompt
-from generator import generateText
-from evaluator import computeMetrics
+try:
+    from .configLoader import loadConfig
+    from .seedUtils import setGlobalSeed
+    from .dataLoader import loadSummarizationData
+    from .modelLoader import loadModelAndTokenizer
+    from .promptBuilder import buildFewShotPrompt, buildStructuredFewShotPrompt
+    from .generator import generateText
+    from .evaluator import computeMetrics
+except ImportError:
+    from configLoader import loadConfig
+    from seedUtils import setGlobalSeed
+    from dataLoader import loadSummarizationData
+    from modelLoader import loadModelAndTokenizer
+    from promptBuilder import buildFewShotPrompt, buildStructuredFewShotPrompt
+    from generator import generateText
+    from evaluator import computeMetrics
 
 def ensureDir(path: str) -> None:
     os.makedirs(path, exist_ok=True)
@@ -42,6 +51,7 @@ def main(configPath: str) -> None:
     predictions = []
     references = []
     sampleRows = []
+    emptyPredictionCount = 0
 
     for ex in tqdm(ds, desc=cfg["experimentName"]):
         articleText, refSummary = getArticleAndRef(ex)
@@ -54,12 +64,15 @@ def main(configPath: str) -> None:
             raise ValueError("Unsupported prompt mode")
 
         genOut = generateText(model, tokenizer, promptText, cfg["generation"])
+        if not genOut["text"].strip():
+            emptyPredictionCount += 1
         predictions.append(genOut["text"])
         references.append(refSummary)
 
         sampleRows.append({
             "prediction": genOut["text"],
             "reference": refSummary,
+            "isEmptyPrediction": not genOut["text"].strip(),
             "latencySec": genOut["latencySec"],
             "tokensPerSec": genOut["tokensPerSec"]
         })
@@ -79,6 +92,10 @@ def main(configPath: str) -> None:
         "modelId": cfg["modelId"],
         "torchCudaAvailable": bool(torch.cuda.is_available()),
         "transformersVersion": transformersVersion,
+        "dataQuality": {
+            "emptyPredictions": emptyPredictionCount,
+            "emptyPredictionsPct": (emptyPredictionCount / len(predictions)) if predictions else 0.0
+        },
         "qualityMetrics": metrics,
         "efficiency": {"latencyAvgSec": latencyAvg, "tokensPerSecAvg": tpsAvg}
     }
@@ -96,6 +113,11 @@ def main(configPath: str) -> None:
     with open(samplesPath, "w", encoding="utf-8") as f:
         for row in sampleRows[:25]:
             f.write(json.dumps(row) + "\n")
+
+    print(
+        f"Empty predictions: {emptyPredictionCount}/{len(predictions)} "
+        f"({(emptyPredictionCount / len(predictions) * 100) if predictions else 0.0:.2f}%)"
+    )
 
 if __name__ == "__main__":
     import argparse

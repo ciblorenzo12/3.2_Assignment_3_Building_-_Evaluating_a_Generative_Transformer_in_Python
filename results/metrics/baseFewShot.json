@@ -1,0 +1,22 @@
+{
+  "experimentName": "baseFewShot",
+  "modelId": "Qwen/Qwen2.5-1.5B-Instruct",
+  "torchCudaAvailable": false,
+  "transformersVersion": "5.2.0",
+  "dataQuality": {
+    "emptyPredictions": 0,
+    "emptyPredictionsPct": 0.0
+  },
+  "qualityMetrics": {
+    "rouge": {
+      "rouge1": 0.20872881588915165,
+      "rouge2": 0.05599361546632503,
+      "rougeL": 0.15293551349242357,
+      "rougeLsum": 0.15505991662109658
+    }
+  },
+  "efficiency": {
+    "latencyAvgSec": 11.358688870000332,
+    "tokensPerSecAvg": 6.317582559153894
+  }
+}

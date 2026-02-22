@@ -1,5 +1,5 @@
-# I listed the Python packages I needed for this project here.
-# Installing this file sets up training, generation, and evaluation dependencies.
+# Python packages needed for this project.
+# Installing this file sets up generation and evaluation dependencies.
 torch
 transformers
 datasets

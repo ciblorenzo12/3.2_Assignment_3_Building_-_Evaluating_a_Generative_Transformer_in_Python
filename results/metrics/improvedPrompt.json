@@ -1,0 +1,22 @@
+{
+  "experimentName": "improvedPrompt",
+  "modelId": "Qwen/Qwen2.5-1.5B-Instruct",
+  "torchCudaAvailable": false,
+  "transformersVersion": "5.2.0",
+  "dataQuality": {
+    "emptyPredictions": 0,
+    "emptyPredictionsPct": 0.0
+  },
+  "qualityMetrics": {
+    "rouge": {
+      "rouge1": 0.17254265936230548,
+      "rouge2": 0.04160645710203889,
+      "rougeL": 0.13374592774929317,
+      "rougeLsum": 0.15301655141320253
+    }
+  },
+  "efficiency": {
+    "latencyAvgSec": 12.174634069999957,
+    "tokensPerSecAvg": 6.607765102562865
+  }
+}
